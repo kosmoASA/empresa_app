@@ -15,7 +15,7 @@ export class TablaEmpresasComponent {
   //* Variables
   listaEmpresas: Empresa[] = [];
 
-  displayedColumns: string[] = ['ID', 'NAME', 'PHONE', 'editar', 'eliminar'];
+  displayedColumns: string[] = ['ID', 'NAME', 'PHONE', 'acciones'];
 
   dataSource!: MatTableDataSource<Empresa>;
 

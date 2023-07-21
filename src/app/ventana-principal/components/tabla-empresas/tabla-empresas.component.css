@@ -2,6 +2,10 @@
 table {
     width: 100%;
   }
+
+  th {
+    width: 25%;
+  }
   
   .div_tabla {
     width: 100%;
@@ -13,11 +17,11 @@ table {
     width: 100%;
   }
   
-  .btn_download, .btn_delete {
+  .btn_edit, .btn_delete {
     cursor: pointer;
   }
   
-  .btn_download {
+  .btn_edit {
     color: #008bf5;
   }
   

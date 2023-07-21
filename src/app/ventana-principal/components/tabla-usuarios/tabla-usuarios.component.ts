@@ -16,7 +16,7 @@ export class TablaUsuariosComponent {
   //* Variables
   listaUsuarios: Usuario[] = [];
 
-  displayedColumns: string[] = ['ID', 'NAME', 'SURNAME', 'editar', 'eliminar'];
+  displayedColumns: string[] = ['ID', 'NAME', 'SURNAME', 'acciones'];
 
   dataSource!: MatTableDataSource<Usuario>;
 

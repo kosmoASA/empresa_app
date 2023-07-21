@@ -12,6 +12,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatInputModule } from '@angular/material/input';
+import { MatDialogModule } from '@angular/material/dialog';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
@@ -30,6 +32,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatFormFieldModule,
     MatTooltipModule,
     MatInputModule,
+    MatDialogModule,
     ReactiveFormsModule,
     FormsModule
   ],
@@ -44,6 +47,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatFormFieldModule,
     MatTooltipModule,
     MatInputModule,
+    MatDialogModule,
     ReactiveFormsModule,
     FormsModule
   ]
