@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Empresa } from '../interfaces/main';
+import { listaEmpresa } from '../interfaces/main';
 import { BehaviorSubject } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
@@ -10,24 +11,46 @@ export class ListaEmpresaService {
   private ListDataEmpresa = new BehaviorSubject<any>([]);
   public listDataEmpresa$ = this.ListDataEmpresa.asObservable();
 
-  getListaEmpresa() {
-    this.ListDataEmpresa.next(this.lista_Empresa);
+
+  constructor(private _snackBar: MatSnackBar) {
+    
   }
 
-  lista_Empresa: Empresa[] = [
-    {ID_EMPRESA: '1', NAME_EMPRESA: 'Hydrogen Bussiness', PHONE_EMPRESA: '317-503-1786'},
-    {ID_EMPRESA: '2', NAME_EMPRESA: 'Helium Bussiness', PHONE_EMPRESA: '317-503-1786'},
-    {ID_EMPRESA: '3', NAME_EMPRESA: 'Lithium Bussiness', PHONE_EMPRESA: '317-503-1786'},
-    {ID_EMPRESA: '4', NAME_EMPRESA: 'Beryllium Bussiness', PHONE_EMPRESA: '317-503-1786'},
-    {ID_EMPRESA: '5', NAME_EMPRESA: 'Boron Bussiness', PHONE_EMPRESA: '317-503-1786'},
-    {ID_EMPRESA: '6', NAME_EMPRESA: 'Carbon Bussiness', PHONE_EMPRESA: '317-503-1786'},
-    {ID_EMPRESA: '7', NAME_EMPRESA: 'Nitrogen Bussiness', PHONE_EMPRESA: '317-503-1786'},
-    {ID_EMPRESA: '8', NAME_EMPRESA: 'Oxygen Bussiness', PHONE_EMPRESA: '317-503-1786'},
-    {ID_EMPRESA: '9', NAME_EMPRESA: 'Fluorine Bussiness', PHONE_EMPRESA: '317-503-1786'}
-  ];
+  addEmpresa (empresa: listaEmpresa) {
 
+    const companiesList = this.ListDataEmpresa.getValue();
+    companiesList.push(empresa);
 
-  addEmpresa (empresa: Empresa) {
-    this.lista_Empresa.unshift(empresa);
+    this.ListDataEmpresa.next(companiesList);
+    
   }
+
+
+  editEmpresa (empresaToEdit: listaEmpresa) {
+    const companiesList = this.ListDataEmpresa.getValue();
+    const indice = companiesList.findIndex((data: any) => data.ID_EMPRESA = empresaToEdit.ID_EMPRESA);
+
+    if(indice !== -1) {
+      companiesList[indice] = {...companiesList[indice], ...empresaToEdit};
+      this.ListDataEmpresa.next(companiesList);
+    }
+
+  }
+
+  deleteEmpresa (idToDelete: string) {
+    const companiesList = this.ListDataEmpresa.getValue();
+    const newData = companiesList.filter((data: any) => data.ID_EMPRESA !== idToDelete);
+
+    this.ListDataEmpresa.next(newData);
+  }
+  
+
+  mensajeExito(message: string) {
+    this._snackBar.open(`La empresa se pudo ${ message } con éxito`, '', {
+      duration: 4000,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom'
+    })
+  }
+
 }

@@ -1,20 +1,26 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Usuario } from 'src/app/interfaces/main';
 import { ListaUsuariosService } from 'src/app/services/lista-usuarios.service';
+import { AgregarEmpresaComponent } from '../agregar-empresa/agregar-empresa.component';
+import { AgregarUsuarioComponent } from '../agregar-usuario/agregar-usuario.component';
+import { DialogDeleteComponent } from '../dialog-delete/dialog-delete.component';
 
 @Component({
   selector: 'app-tabla-usuarios',
   templateUrl: './tabla-usuarios.component.html',
   styleUrls: ['./tabla-usuarios.component.css']
 })
-export class TablaUsuariosComponent {
+export class TablaUsuariosComponent implements OnChanges{
 
   
   //* Variables
+  @Input() public idEmpresa! : string;
   listaUsuarios: Usuario[] = [];
+  
 
   displayedColumns: string[] = ['ID', 'NAME', 'SURNAME', 'acciones'];
 
@@ -23,33 +29,55 @@ export class TablaUsuariosComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor (private _listaUsuariosService: ListaUsuariosService)
+  constructor (private _listaUsuariosService: ListaUsuariosService,
+               private dialog: MatDialog)
   {
 
   }
 
-  ngOnInit() {
-    this._listaUsuariosService.listDataUsuario$.subscribe((data: any) => {
+  ngOnChanges() {
+    this._listaUsuariosService.filterUsersByCompany(this.idEmpresa);
+    this._listaUsuariosService.getUsuariosFiltrados().subscribe((data: any) => {
+     
       this.listaUsuarios = data;
       this.dataSource = new MatTableDataSource(this.listaUsuarios);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
 
-    this._listaUsuariosService.getListaUsuarios();
-
   }
 
-
-
-
   
-  onEditUser() {
+  
+  
+  onEditUser(user: Usuario | null, event: string) {
+    const dialogRef = this.dialog.open(AgregarUsuarioComponent, {
+      width: '400px',
+      data: {
+        user: user,
+        event: event
+      }
+    });
     
+    dialogRef.afterClosed().subscribe(() => {
+      const mensaje = 'Editar';
+      this._listaUsuariosService.mensajeExito(mensaje);
+    })
   }
   
-  onDeleteUser(){
+  
+  onDeleteUser(id: string){
+    const dialogRef = this.dialog.open(DialogDeleteComponent, {
+      width: '400px'
+    });
 
+    dialogRef.afterClosed().subscribe((dialogStatus: boolean) => {
+      const mensaje = 'Eliminar';
+      if(dialogStatus !== true) return;
+
+      this._listaUsuariosService.deleteUser(id);
+      this._listaUsuariosService.mensajeExito(mensaje);
+    })
   }
 
 

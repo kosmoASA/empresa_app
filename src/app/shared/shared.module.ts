@@ -13,6 +13,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -33,6 +35,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatTooltipModule,
     MatInputModule,
     MatDialogModule,
+    MatSnackBarModule,
     ReactiveFormsModule,
     FormsModule
   ],
@@ -48,6 +51,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatTooltipModule,
     MatInputModule,
     MatDialogModule,
+    MatSnackBarModule,
     ReactiveFormsModule,
     FormsModule
   ]

@@ -12,7 +12,7 @@
 
                 <div class="error">
                     <span *ngIf="form.get('NAME_USER')?.hasError('required') && form.get('NAME_USER')?.touched">
-                        El nombre del Usuario es un campo <strong>requerido</strong>.
+                        El nombre es un campo <strong>requerido</strong>.
                     </span>
                 </div>
             </div>
@@ -27,31 +27,18 @@
                 </mat-form-field>
                 <div class="error">
                     <span *ngIf="form.get('SURNAME_USER')?.hasError('required') && form.get('SURNAME_USER')?.touched">
-                        El ID del Usuario es un campo <strong>requerido</strong>.
+                        El Apellido es un campo <strong>requerido</strong>.
                     </span>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="column">
-                <mat-form-field appearance="fill">
-                    <mat-label>ID Usuario</mat-label>
-                    <input matInput type="string" placeholder="ID del Usuario" autocomplete="off" formControlName="ID_USER">
-                </mat-form-field>
-                <div class="error">
-                    <span *ngIf="form.get('ID_USER')?.hasError('required') && form.get('ID_USER')?.touched">
-                        El ID del Usuario es un campo <strong>requerido</strong>.
-                    </span>
-                </div>
-            </div>
-        </div>
-
+    
     </mat-dialog-content>
 
     <mat-dialog-actions>
-        <button type="button" mat-button mat-dialog-close mat-button color="accent">Cancelar</button>
+        <button type="button"  mat-button mat-dialog-close mat-button color="accent">Cancelar</button>
         <button type="submit" mat-raised-button color="accent" [mat-dialog-close]="true" cdkFocusInitial
-        >Agregar</button>
+        >Aceptar</button>
     </mat-dialog-actions>
 
 </form>

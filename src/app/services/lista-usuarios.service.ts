@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Usuario } from '../interfaces/main';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
@@ -10,21 +11,65 @@ export class ListaUsuariosService {
   private ListDataUsuario = new BehaviorSubject<any>([]);
   public listDataUsuario$ = this.ListDataUsuario.asObservable();
 
-  getListaUsuarios() {
-    this.ListDataUsuario.next(this.lista_Usuarios);
+  private UsuariosFiltrados = new BehaviorSubject<any>([]);
+  public UsuariosFiltrados$ = this.UsuariosFiltrados.asObservable();
+
+  constructor(private _snackBar: MatSnackBar) {
+
   }
 
-  lista_Usuarios: Usuario[] = [
-    {ID_USER: '1', NAME_USER: 'Steven', SURNAME_USER: 'Angel'},
-    {ID_USER: '2', NAME_USER: 'Mayra', SURNAME_USER: 'Sierra'},
-    {ID_USER: '3', NAME_USER: 'Nicolas', SURNAME_USER: 'Barbetti'},
-    {ID_USER: '4', NAME_USER: 'Omar', SURNAME_USER: 'Urrego'},
-    {ID_USER: '5', NAME_USER: 'Cristian', SURNAME_USER: 'Duque'},
-    {ID_USER: '6', NAME_USER: 'Wilson', SURNAME_USER: 'Beltrán'},
-    {ID_USER: '7', NAME_USER: 'Santiago', SURNAME_USER: 'Beltran'},
-    {ID_USER: '8', NAME_USER: 'Marcela', SURNAME_USER: 'Orozco'},
-    {ID_USER: '9', NAME_USER: 'Viviana', SURNAME_USER: 'Orozco'}
-  ];
+
+  addUser(user: Usuario) {
+
+    const usersList = this.ListDataUsuario.getValue();
+    usersList.push(user);
+
+    this.ListDataUsuario.next(usersList);
+  }
+
+
+  editUser(userToEdit: Usuario) {
+    const usersList = this.ListDataUsuario.getValue();
+    const indice = usersList.findIndex((data: any) => data.ID_EMPRESA = userToEdit.ID_USER);
+
+    if(indice !== -1) {
+      usersList[indice] = {...usersList[indice], ...userToEdit};
+      this.ListDataUsuario.next(usersList);
+    }
+
+  }
+
+
+  deleteUser (idToDelete: string) {
+    const usersList = this.ListDataUsuario.getValue();
+    const newData = usersList.filter((data: any) => data.ID_USER !== idToDelete);
+
+    this.ListDataUsuario.next(newData);
+  }
+
+
+  filterUsersByCompany(idUser: string) {
+    const usersList = this.ListDataUsuario.getValue();
+    const usersFiltered = usersList.filter((users:any) => users.ID_EMPRESA === idUser);
+    this.UsuariosFiltrados.next(usersFiltered);
+  }
+
+  getUsuariosFiltrados(): Observable<any> {
+    return this.UsuariosFiltrados$;
+  }
+
+
+  mensajeExito(message: string) {
+    this._snackBar.open(`El usuario se pudo ${ message } con éxito`, '', {
+      duration: 4000,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom'
+    })
+  }
+  
+  
+
+
 
 
 

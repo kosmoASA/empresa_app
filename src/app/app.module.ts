@@ -9,11 +9,12 @@ import { AppComponent } from './app.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
-import { VentanaPrincipalComponent } from './ventana-principal/ventana-principal.component';
 import { TablaEmpresasComponent } from './ventana-principal/components/tabla-empresas/tabla-empresas.component';
 import { TablaUsuariosComponent } from './ventana-principal/components/tabla-usuarios/tabla-usuarios.component';
 import { AgregarEmpresaComponent } from './ventana-principal/components/agregar-empresa/agregar-empresa.component';
 import { AgregarUsuarioComponent } from './ventana-principal/components/agregar-usuario/agregar-usuario.component';
+import { VentanaPrincipalComponent } from './ventana-principal/ventana-principal.component';
+import { DialogDeleteComponent } from './ventana-principal/components/dialog-delete/dialog-delete.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AgregarUsuarioComponent } from './ventana-principal/components/agregar-
     TablaEmpresasComponent,
     TablaUsuariosComponent,
     AgregarEmpresaComponent,
-    AgregarUsuarioComponent
+    AgregarUsuarioComponent,
+    DialogDeleteComponent
   ],
   imports: [
     BrowserModule,

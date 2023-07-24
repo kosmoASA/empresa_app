@@ -28,3 +28,7 @@ table {
   .btn_delete {
     color: #c62f4e;
   }
+
+a {
+  cursor: pointer;
+}

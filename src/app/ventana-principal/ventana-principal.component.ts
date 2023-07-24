@@ -3,7 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { AgregarEmpresaComponent } from './components/agregar-empresa/agregar-empresa.component';
 import { AgregarUsuarioComponent } from './components/agregar-usuario/agregar-usuario.component';
 import { ListaEmpresaService } from '../services/lista-empresa.service';
-import { Empresa } from '../interfaces/main';
+import { Empresa, Usuario } from '../interfaces/main';
+import { ListaUsuariosService } from '../services/lista-usuarios.service';
 
 @Component({
   selector: 'app-ventana-principal',
@@ -12,31 +13,55 @@ import { Empresa } from '../interfaces/main';
 })
 export class VentanaPrincipalComponent {
 
-constructor (public dialog: MatDialog,
-             private _listaEmpresaService: ListaEmpresaService) 
-{
+  //* Variables
 
-}
-  onAgregarEmpresa(){ // Abre el modal para agregar empresa
+  public listaUsuarios: any[] = []
+  public idEmpresa!: string;
+
+  constructor (public dialog: MatDialog,
+               private _listaEmpresaService: ListaEmpresaService,
+               private _listaUsuariosService: ListaUsuariosService,
+               ) 
+  {
+  
+  }
+
+  getIdEmpresa(idEmpresa: string) {
+    this.idEmpresa = idEmpresa;
+  }
+  
+
+  onAgregarEmpresa( empresa: Empresa | null, event: string){ // Abre el modal para agregar empresa
     const dialogRef = this.dialog.open(AgregarEmpresaComponent, {
-      width: '500px',
+      width: '400px',
+      data: {
+        empresa: empresa,
+        event: event
+      }
     });
 
-    dialogRef.afterClosed().subscribe((dataEmpresa: Empresa) => {
-      console.log(dataEmpresa);
-      this._listaEmpresaService.addEmpresa(dataEmpresa);
-      this._listaEmpresaService.getListaEmpresa();
-
+    dialogRef.afterClosed().subscribe(() => {
+      const mensaje = 'Agregar';
+      this._listaEmpresaService.mensajeExito(mensaje);
     });
   }
 
-  onAgregarUsuario(){ // Abre el modal para agregar usuario
+  
+
+  onAgregarUsuario(user: Usuario | null, event: string){ // Abre el modal para agregar usuario
     const dialogRef = this.dialog.open(AgregarUsuarioComponent, {
-      width: '500px',
+      width: '400px',
+      data: {
+        idEmp: this.idEmpresa,
+        user: user,
+        event: event
+      }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+    dialogRef.afterClosed().subscribe(() => {
+      const mensaje = 'Agregar';
+      this._listaUsuariosService.mensajeExito(mensaje);
     });
+
   }
 }
